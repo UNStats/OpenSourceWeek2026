@@ -20,7 +20,7 @@ For more detailed information, follow the instructions available on [datacommons
 
 First identify the {{dc\_base\_url}} for the environment to be used. The MCP endpoint is available from the path `{{dc_base_url}}/mcp` (for example, [`https://dc-un-dev-dc-datacommons-service-72utkhfqvq-uc.a.run.app/mcp`](https://dc-un-dev-dc-datacommons-service-72utkhfqvq-uc.a.run.app/mcp))
 
-## Connecting with Gemini
+### Connecting with Gemini
 
 *Determine whether you prefer to directly modify the settings.json for your gemini installation, or potentially use the cli to directly add the MCP service.*
 
@@ -53,19 +53,14 @@ e.g.
 $ gemini mcp add --transport http undata https://dc-un-dev-dc-datacommons-service-72utkhfqvq-uc.a.run.app/
 ```
 
-### Post connection
+#### Post connection
 
-**Open the gemini console**
+Open the gemini console and confirm the connection is valid:
 
 ```
 $ gemini
-```
 
-**Confirm that the connection is valid** 
-
-```
-# Simple discovery
-$ /mcp
+> /mcp
 
 ...
 Note: First startup may take longer. Tool availability will update automatically.
@@ -81,10 +76,10 @@ Configured MCP servers:
 $ /mcp desc undata
 ```
 
-If you do not see a green `Ready` for the mcp instance, reach out. This is a	potential cause for concern.
+If you do not see a green `Ready` for the mcp instance, the connection is incomplete and tool calls may not succeed.
 
-**Using the MCP**   
-Listing the tools can provide initial gateway to the types of queries to interface with via MCP.
+**Using MCP**   
+List the available MCP tools to understand the types of queries supported and data available from the MCP service.
 
 ```
 $ /mcp list
@@ -111,6 +106,26 @@ Data Commons provides a wide range of variables for describing climate change, w
   Sector-Specific Emissions (CO₂ vs. GHG)
 ...
 ```
+
+### Connecting with Claude Code
+
+Configuring the MCP connection with Claude is direct from the console:
+
+```
++$ claude mcp add --transport http undata https://dc-un-dev-dc-datacommons-service-72utkhfqvq-uc.a.run.app/mcp
+```
+
+#### Post connection
+
+From within the console, Claude Code provides rich inspection utilities for connected MCP services.
+
+```
+$ claude
+
+> /mcp list
+```
+
+From the MCP list, you can press `return` to select the `undata` instance to see the connection status and view available MCP tools. To explore available variables, escape to the console and ask relevant questions, e.g. `> What variables describe clean water access in Africa?`
 
 ## API Interactions with Postman
 
