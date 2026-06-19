@@ -4,6 +4,8 @@
 >
 > This repository contains this guide plus a ready-to-use Postman collection and environment (in [`docs/`](docs/)). See [API interactions with Postman](#api-interactions-with-postman) below.
 
+> List of all available variables can be found (in [`docs/`](docs/)). 
+
 ## Hackathon environments
 
 #### Custom DC
