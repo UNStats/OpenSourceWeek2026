@@ -8,7 +8,7 @@
 
 #### Custom DC
 
-[https://un-sdg-customdc-datacommons-web-service-777379434764.us-central1.run.app/](https://un-sdg-customdc-datacommons-web-service-777379434764.us-central1.run.app/)
+[https://cdc-un-cs-datacommons-web-service-620046630330.us-central1.run.app/](https://cdc-un-cs-datacommons-web-service-620046630330.us-central1.run.app/)
 
 #### DC Platform
 
