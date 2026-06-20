@@ -16,6 +16,10 @@
 
 [https://dc-un-dev-dc-datacommons-service-72utkhfqvq-uc.a.run.app/](https://dc-un-dev-dc-datacommons-service-72utkhfqvq-uc.a.run.app/)
 
+#### SDMX (experimental, data parity with DC Platform)
+
+[https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/](https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/)
+
 ## Connecting to MCP endpoints
 
 For more detailed information, follow the instructions available on [datacommons.org](http://datacommons.org), starting with [Configure the MCP server \- Docs \- Data Commons](https://docs.datacommons.org/custom_dc/mcp.html).
@@ -179,3 +183,100 @@ The collection adds the `X-API-Key` header only when `api_key` is non-empty. Kee
 7. Keep `api_key` blank for Custom Data Commons.
 8. Open the collection and run the V2 Node / Observation / Resolve requests.
 
+## SDMX API Usage (experimental)
+
+This note summarizes the SDMX API surface currently available for hackathon usage.
+
+#### SDMX Environment (with data parity with DC Platform)
+
+[https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/](https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/)
+
+### Support
+- SDMX version 3.0
+- REST endpoints use SDMX v3 style paths under `/sdmx/v3`.
+- Dataflow: `dataflow/DATACOMMONS/DF_OBSERVATIONS/1.0.0`
+
+### Components
+
+There is no DSD endpoint yet. Use this model for now:
+
+| Type | Component |
+| --- | --- |
+| Dimension | `variableMeasured` |
+| Dimension | `observationAbout` |
+| Dimension | `unit` |
+| Dimension | `measurementMethod` |
+| Dimension | `observationPeriod` |
+| Dimension | `provenance` |
+| Time dimension | `TIME_PERIOD` |
+| Measure | `OBS_VALUE` |
+| Attribute | `scalingFactor` |
+
+### Data API
+
+```text
+GET /sdmx/v3/data/dataflow/DATACOMMONS/DF_OBSERVATIONS/1.0.0/*
+```
+
+Output:
+
+- JSON-STAT by default
+- SDMX-CSV 2.0 with `format=csv`
+
+Required filters:
+
+- `c[variableMeasured]`
+- `c[observationAbout]`
+
+Optional filter:
+
+- `c[TIME_PERIOD]`
+
+CSV example:
+
+```sh
+curl -g 'https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/core/api/sdmx/v3/data/dataflow/DATACOMMONS/DF_OBSERVATIONS/1.0.0/*?c[variableMeasured]=undata/sdg/AG_FLS_INDEX.PRODUCT--AGG_ANIMAL_PROD&c[observationAbout]=Earth&format=csv'
+```
+
+Restrictions:
+
+- Filters only support comma OR values. `+`, duplicate filters, and operators
+  such as `ge:2020` are not supported.
+- Only the `*` key is supported.
+- SDMX Data JSON and SDMX Data XML are not supported.
+
+### Availability API
+
+```text
+GET /sdmx/v3/availability/dataflow/DATACOMMONS/DF_OBSERVATIONS/1.0.0/*/{componentID}
+```
+
+Output:
+
+- SDMX-JSON 2.0
+
+Required filter:
+
+- `c[variableMeasured]`
+
+Example:
+
+```sh
+curl -g 'https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/core/api/sdmx/v3/availability/dataflow/DATACOMMONS/DF_OBSERVATIONS/1.0.0/*/provenance?c[variableMeasured]=undata/eclac/EDU_YEARS.AGE--AGE-Y15T24__SEX--SEX-F__URBANIZATION--URBANIZATION-R'
+```
+
+Supported lookup components:
+
+- `observationAbout`
+- `variableMeasured`
+- `unit`
+- `measurementMethod`
+- `observationPeriod`
+- `provenance`
+
+Restrictions:
+
+- Only `c[variableMeasured]` is allowed as a filter.
+- `TIME_PERIOD` is not supported.
+- `references=all` is not supported.
+- `mode=available` is not supported.
