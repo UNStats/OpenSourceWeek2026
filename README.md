@@ -192,7 +192,7 @@ This note summarizes the SDMX API surface currently available for hackathon usag
 [https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/](https://un-sdmx-demo-dc-datacommons-service-496370955550.us-central1.run.app/)
 
 ### Support
-
+- SDMX version 3.0
 - REST endpoints use SDMX v3 style paths under `/sdmx/v3`.
 - Dataflow: `dataflow/DATACOMMONS/DF_OBSERVATIONS/1.0.0`
 
